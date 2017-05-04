@@ -14,35 +14,59 @@ To record the instructions of the driver and play them back, we included a Micro
 The Arduino Uno is equipped with six Analog Input pins. These pins are capable of reading an analog signal and converting it to a digital approximation between 0 and 1023 (https://www.arduino.cc/en/Tutorial/AnalogInputPins). The Uno is also equipped with 14 Digital I/O pins. Some of these pins have special functionality and are reserved for specific tasks, but all of them are capable of 5V (https://www.arduino.cc/en/Tutorial/DigitalPins). The 5V capability of the pins is perfect for our transistors, which have a switching threshold of .5V to 2.8V. In our case, the switching voltage is 5V. The transistors have a maximum conduction current of 270mA. From these specifications, we know that the arduino and chosen transistors are perfectly capable of handling the voltages and current of the controller electronics.
 
 D2 - Button1_1
+
 D3 - Button2_1
+
 D4 - LeftTransistor_Gate
+
 D5 - RightTransistor_Gate
+
 D6 - UpTransistor_Gate
+
 D7 - DownTransistor_Gate
 
 D10 - CS (SD)
+
 D11 - MOSI (SD)
+
 D12 - MISO (SD)
+
 D13 - SCK (SD)
 
+
 A2 - LeftTransistor_Drain
+
 A3 - RightTransistor_Drain
+
 A4 - UpTransistor_Drain
+
 A5 - DownTransistor_Drain
 
+
 5V - Button1_2
+
 5V - Button2_2
+
 5V - VCC (SD)
 
+
 GND - 10 kOhm - Button1_1
+
 GND - 10 kOhm - Button2_1
+
 GND - LeftTransistor_Source, RightTransistor_Source, UpTransistor_Source, DownTransistor_Source
+
 GND - GND (SD)
+
 GND - ControllerGND
 
+
 ControllerLeft - LeftTransistor_Drain
+
 ControllerRight - RightTransistor_Drain
+
 ControllerUp - UpTransistor_Drain
+
 ControllerDown - DownTransistor_Drain
 
 ## Code
