@@ -51,8 +51,8 @@ void setup() {
 	//Setup the SM buttons to generate interrupts.
 	pinMode(play, INPUT);
 	pinMode(rec, INPUT);
-	attachInterrupt(play, PlayButton, HIGH);
-	attachInterrupt(rec, RecButton, HIGH);
+	attachInterrupt(digitalPinToInterrupt(play), PlayButton, HIGH);
+	attachInterrupt(digitalPinToInterrupt(rec), RecButton, HIGH);
 
 	//Setup input and output pins
 	pinMode(leftI, INPUT);
@@ -71,6 +71,7 @@ void setup() {
 }
 
 void PlayButton() {
+  Serial.println("Play button pressed");
 
 	switch(state){
 		case RUN:
@@ -92,7 +93,8 @@ void PlayButton() {
 }
 
 void RecButton() {
-
+  Serial.println("Record button pressed");
+  
 	switch(state){
 		case RUN:
 			nstate = REC;
@@ -140,33 +142,30 @@ void loop() {
 			
 			instr = readLine();
 
-			switch(instr) {
-			case "L":
+			if(instr.equals("L")){
 				digitalWrite(leftO, HIGH);
 				digitalWrite(rightO, LOW);
-				break;
-			case "R":
-				digitalWrite(leftO, LOW);
+			
+			} else if(instr.equals("R")){
+  				digitalWrite(leftO, LOW);
 				digitalWrite(rightO, HIGH);
-				break;
-			case "Stright":
-				digitalWrite(leftO, LOW);
+			
+			} else if(instr.equals("Straight")){
+  				digitalWrite(leftO, LOW);
 				digitalWrite(rightO, LOW);
-				break;
-			case "U":
+			}
+			
+			if(instr.equals("U")){
 				digitalWrite(upO, HIGH);
 				digitalWrite(downO, LOW);
-				break;
-			case "D":
-				digitalWrite(upO, LOW);
+			
+			} else if(instr.equals("D")){
+  				digitalWrite(upO, LOW);
 				digitalWrite(downO, HIGH);
-				break;
-			case "Stop":
-				digitalWrite(upO, LOW);
+			
+			} else if(instr.equals("Stop")){
+  				digitalWrite(upO, LOW);
 				digitalWrite(downO, LOW);
-				break;
-			default:
-				break;
 			}
 
 			break;
@@ -209,15 +208,20 @@ void loop() {
 void newRecording() {
 
 	//Finds the number of the next file.
-	String filename = "file" + i + ".txt";
-	char buf[10] = filename.toCharArray(buf, 10);
+	String filename = "file";
+	filename += i;
+	filename += ".txt";
+	char buf[10];
+	filename.toCharArray(buf, 10);
 	while(SD.exists(buf)){
 		i++;
-		filename = "file" + i + ".txt";
-		buf = filename.toCharArray(buf, 10);
+		filename = "file";
+		filename += i;
+		filename += ".txt";
+		filename.toCharArray(buf, 10);
 	}
 	
-	createFile(filename);
+	createFile(buf);
 
 }
 
