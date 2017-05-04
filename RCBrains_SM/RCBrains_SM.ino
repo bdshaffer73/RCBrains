@@ -8,6 +8,7 @@ it back.
 //Needed to read the SD card.
 #include <SD.h>
 #include <SPI.h>
+#include <String.h>
 
 //Needed for interrupts
 #include <avr/interrupt.h>
@@ -25,7 +26,7 @@ File file;
 const byte RUN=0, PLAY = 1, REC=2;//State placeholders
 int state, nstate = RUN;//State variables
 int l, r, u, d, i = 0, line = 0;
-String instr;
+String instr, L = "L", R = "R";
 
 //Button pins
 const byte play = 2;
@@ -51,8 +52,8 @@ void setup() {
 	//Setup the SM buttons to generate interrupts.
 	pinMode(play, INPUT);
 	pinMode(rec, INPUT);
-	attachInterrupt(digitalPinToInterrupt(play), PlayButton, HIGH);
-	attachInterrupt(digitalPinToInterrupt(rec), RecButton, HIGH);
+	attachInterrupt(digitalPinToInterrupt(play), PlayButton, RISING);
+	attachInterrupt(digitalPinToInterrupt(rec), RecButton, RISING);
 
 	//Setup input and output pins
 	pinMode(leftI, INPUT);
@@ -72,7 +73,28 @@ void setup() {
 
 void PlayButton() {
   Serial.println("Play button pressed");
-
+  while(digitalRead(play) == HIGH) {}
+  file.close();
+  i=0;
+  String filename = "file";
+  filename += i;
+  filename += ".txt";
+  char buf[10];
+  filename.toCharArray(buf, 10);
+  while(SD.exists(buf)){
+    i++;
+    filename = "file";
+    filename += i;
+    filename += ".txt";
+    filename.toCharArray(buf, 10);
+  }
+  filename = "file";
+  filename += i-1;
+  filename += ".txt";
+  filename.toCharArray(buf, 10);
+  openFile(buf);
+  
+  Serial.println("Success");
 	switch(state){
 		case RUN:
 			nstate = PLAY;
@@ -94,7 +116,7 @@ void PlayButton() {
 
 void RecButton() {
   Serial.println("Record button pressed");
-  
+  while(digitalRead(rec) == HIGH) {}
 	switch(state){
 		case RUN:
 			nstate = REC;
@@ -141,12 +163,14 @@ void loop() {
 		case PLAY:
 			
 			instr = readLine();
+			instr.trim();
+                        Serial.println(instr);
 
-			if(instr.equals("L")){
+			if(instr == L){
 				digitalWrite(leftO, HIGH);
 				digitalWrite(rightO, LOW);
 			
-			} else if(instr.equals("R")){
+			} else if(instr.equals(R)){
   				digitalWrite(leftO, LOW);
 				digitalWrite(rightO, HIGH);
 			
@@ -154,7 +178,7 @@ void loop() {
   				digitalWrite(leftO, LOW);
 				digitalWrite(rightO, LOW);
 			}
-			
+	
 			if(instr.equals("U")){
 				digitalWrite(upO, HIGH);
 				digitalWrite(downO, LOW);
@@ -178,19 +202,19 @@ void loop() {
 			d = analogRead(downI);
 			
 			if(l < 300) {
-				writeToFile("L\n");
+				writeToFile("L");
 			} else if(r < 300) {
-				writeToFile("R\n");
+				writeToFile("R");
 			} else {
-				writeToFile("Straight\n");
+				writeToFile("Straight");
 			}
 			
 			if(u < 300) {
-				writeToFile("U\n");
+				writeToFile("U");
 			} else if(d < 300) {
-				writeToFile("D\n");
+				writeToFile("D");
 			} else {
-				writeToFile("Stop\n");
+				writeToFile("Stop");
 			}	
 
 			break;
