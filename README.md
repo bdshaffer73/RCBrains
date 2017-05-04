@@ -13,6 +13,8 @@ To record the instructions of the driver and play them back, we included a Micro
 
 The Arduino Uno is equipped with six Analog Input pins. These pins are capable of reading an analog signal and converting it to a digital approximation between 0 and 1023 (https://www.arduino.cc/en/Tutorial/AnalogInputPins). The Uno is also equipped with 14 Digital I/O pins. Some of these pins have special functionality and are reserved for specific tasks, but all of them are capable of 5V (https://www.arduino.cc/en/Tutorial/DigitalPins). The 5V capability of the pins is perfect for our transistors, which have a switching threshold of .5V to 2.8V. In our case, the switching voltage is 5V. The transistors have a maximum conduction current of 270mA. From these specifications, we know that the arduino and chosen transistors are perfectly capable of handling the voltages and current of the controller electronics.
 
+## Pin connections
+
 D2 - Button1_1
 
 D3 - Button2_1
@@ -70,4 +72,6 @@ ControllerUp - UpTransistor_Drain
 ControllerDown - DownTransistor_Drain
 
 ## Code
-!!!Discuss the state machine
+Our state machine has three states: RUN, PLAY, REC. RUN is the default state, and simply allows the driver to drive without recording or playing back instructions. REC records the driver's actions to the SD card, once per 50ms. PLAY reads the driver's actions from the SD card and writes them to the controller inputs.
+
+!!!Elaborate.
