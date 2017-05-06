@@ -77,3 +77,11 @@ ControllerDown - DownTransistor_Drain
 Our state machine has three states: RUN, PLAY, and EC. RUN is the default state, and simply allows the driver to drive without recording or playing back instructions. REC records the driver's actions to the SD card, once per 10ms. PLAY reads the driver's actions from the SD card and writes them to the controller inputs once per 25ms. The time needed to record inputs is longer than the time needed to play them back. We introduced the delays to synchronize these two states. The time needed to perform the functions is neglible compared to the length of the delays.
 
 Please refer to the Code section for more details. https://github.com/bdshaffer73/RCBrains/tree/master/RCBrains_SM
+
+## Team work
+Over the course of the project, Grant built most of the hardware and Ben built most of the code. For hardware, Ben soldered the connections to the controller and sourced the Arduino and MOSFETs. Grant did most of the wiring. For software, Grant did most of the debugging. Ben built the ISRs and state machine.
+
+## Costs
+The SD adapter was purchased for $5. The Arduino retails for $20. The RC Car is worth roughtly $20. The MOSFETs were worth $0.80 individually, but are cheaper in bulk. The SD card retails for $10-$30 depending on purchase location. We spent roughly 10 man hours working on the project.
+
+Total price: $68 + labor
