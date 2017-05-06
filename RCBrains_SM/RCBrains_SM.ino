@@ -191,7 +191,7 @@ void loop() {
   				digitalWrite(upO, LOW);
 				digitalWrite(downO, LOW);
 			}
-
+                        delay(25);
 			break;
 			
 		case REC:
@@ -216,7 +216,7 @@ void loop() {
 			} else {
 				writeToFile("Stop");
 			}	
-
+                        delay(10);
 			break;
 			
 		default:
@@ -224,7 +224,6 @@ void loop() {
 			break;
 	}
 
-	delay(50);
 	
 	return;
 }
