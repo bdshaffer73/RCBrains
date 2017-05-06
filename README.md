@@ -6,6 +6,8 @@ This project involves enabling an Arduino Uno to control the transmitter of an R
 
 The transmitter has 4 button-like pieces (metal tabs shown _here_) that tell the IC which way each joystick is being pushed. The controller can only transmit Left, Right, Neither, Forward, Backward, Stop. Neither and Stop are simply the lack of a signal from the each respective joystick. Our system reads the state of the joysticks, then imitates joystick actions. Our system is unable to prevent joystick input from being read by the controller because it is in parallel with the joysticks, rather than in series. This leaves possible edge cases such as Forward and Backward being pressed at the same time.
 
+This project was developed across Windows and Linux platforms. It should be noted that the Linux platform had unresolved issues installing the newest Arduino libraries, and was unable to use the digitPinToInterrupt() function.
+
 ## Our strategy
 To read and write to the controller, we simply soldered wires to the positive end of these buttons and to the system's common ground. When a button is not pressed, the voltage difference between the button and ground is approximately 4V. When the button is pressed, this drops to 0V. The current through this connection is approximately 40 micro-Amps. To emulate button presses, we controlled N-MOS transistors (ZVN3306A) with the arduino. The voltages and current in this system are well within the range of the Arduino and transistors [1][2].
 
