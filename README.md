@@ -85,3 +85,6 @@ Over the course of the project, Grant built most of the hardware and Ben built m
 The SD adapter was purchased for $5. The Arduino retails for $20. The RC Car is worth roughtly $20. The MOSFETs were worth $0.80 individually, but are cheaper in bulk. The SD card retails for $10-$30 depending on purchase location. We spent roughly 10 man hours working on the project.
 
 Total price: $68 + labor
+
+## Video demo
+Here's a link to a video demoing the system. https://youtu.be/cCZ2MDA87To
